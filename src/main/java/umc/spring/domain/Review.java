@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import umc.spring.domain.common.BaseEntity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @Builder
@@ -15,7 +18,8 @@ public class Review extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String title;
+    @Column(name = "title")
+    private String content; // 리뷰 내용
 
     private Float score;
 
@@ -26,4 +30,7 @@ public class Review extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "store_id")
     private Store store;  // Store와의 연관 관계
+
+    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL)
+    private List<Reply> replies = new ArrayList<>(); // 리뷰에 대한 답글 리스트
 }

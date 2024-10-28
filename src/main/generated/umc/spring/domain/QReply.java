@@ -11,16 +11,16 @@ import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
- * QReview is a Querydsl query type for Review
+ * QReply is a Querydsl query type for Reply
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
-public class QReview extends EntityPathBase<Review> {
+public class QReply extends EntityPathBase<Reply> {
 
-    private static final long serialVersionUID = 1510377220L;
+    private static final long serialVersionUID = 1157094846L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
-    public static final QReview review = new QReview("review");
+    public static final QReply reply = new QReply("reply");
 
     public final umc.spring.domain.common.QBaseEntity _super = new umc.spring.domain.common.QBaseEntity(this);
 
@@ -31,37 +31,30 @@ public class QReview extends EntityPathBase<Review> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final QMember member;
-
-    public final ListPath<Reply, QReply> replies = this.<Reply, QReply>createList("replies", Reply.class, QReply.class, PathInits.DIRECT2);
-
-    public final NumberPath<Float> score = createNumber("score", Float.class);
-
-    public final QStore store;
+    public final QReview review;
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> updatedAt = _super.updatedAt;
 
-    public QReview(String variable) {
-        this(Review.class, forVariable(variable), INITS);
+    public QReply(String variable) {
+        this(Reply.class, forVariable(variable), INITS);
     }
 
-    public QReview(Path<? extends Review> path) {
+    public QReply(Path<? extends Reply> path) {
         this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
-    public QReview(PathMetadata metadata) {
+    public QReply(PathMetadata metadata) {
         this(metadata, PathInits.getFor(metadata, INITS));
     }
 
-    public QReview(PathMetadata metadata, PathInits inits) {
-        this(Review.class, metadata, inits);
+    public QReply(PathMetadata metadata, PathInits inits) {
+        this(Reply.class, metadata, inits);
     }
 
-    public QReview(Class<? extends Review> type, PathMetadata metadata, PathInits inits) {
+    public QReply(Class<? extends Reply> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.member = inits.isInitialized("member") ? new QMember(forProperty("member")) : null;
-        this.store = inits.isInitialized("store") ? new QStore(forProperty("store"), inits.get("store")) : null;
+        this.review = inits.isInitialized("review") ? new QReview(forProperty("review"), inits.get("review")) : null;
     }
 
 }

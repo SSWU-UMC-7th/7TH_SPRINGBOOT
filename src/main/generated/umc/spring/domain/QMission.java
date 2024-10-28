@@ -37,6 +37,8 @@ public class QMission extends EntityPathBase<Mission> {
 
     public final NumberPath<Integer> reward = createNumber("reward", Integer.class);
 
+    public final StringPath status = createString("status");
+
     public final QStore store;
 
     //inherited
