@@ -7,19 +7,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import umc.spring.service.ReviewService.ReviewService;
-import umc.spring.web.dto.review.ReviewRequestDTO;
+import umc.spring.service.MissionService.MissionService;
+import umc.spring.web.dto.mission.MissionRequestDTO;
 
 @RestController
-@RequestMapping("/api/reviews")
+@RequestMapping("/api/missions")
 @RequiredArgsConstructor
-public class ReviewController {
+public class MissionController {
 
-    private final ReviewService reviewService;
+    private final MissionService missionService;
 
     @PostMapping
-    public ResponseEntity<?> addReview(@RequestBody @Valid ReviewRequestDTO dto) {
-        reviewService.addReview(dto);
-        return ResponseEntity.ok("Review added successfully.");
+    public ResponseEntity<?> addMission(@RequestBody @Valid MissionRequestDTO dto) {
+        missionService.addMission(dto);
+        return ResponseEntity.ok("Mission added successfully.");
     }
 }

@@ -1,4 +1,4 @@
-package umc.spring.web.dto;
+package umc.spring.web.dto.review;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
