@@ -3,6 +3,8 @@ package umc.spring.service.StoreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import umc.spring.converter.StoreConverter;
+import umc.spring.domain.Region;
 import umc.spring.domain.Store;
 import umc.spring.domain.Mission;
 import umc.spring.repository.StoreRepository.StoreRepository;
@@ -12,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import umc.spring.web.dto.StoreRequestDTO;
 
 @Service
 @RequiredArgsConstructor
