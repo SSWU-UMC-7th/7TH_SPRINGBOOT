@@ -1,2 +1,4 @@
-package umc.spring.service.TempService;public class TempCommandService {
+package umc.spring.service.TempService;
+
+public class TempCommandService {
 }

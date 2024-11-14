@@ -1,7 +1,9 @@
-package umc.spring.apiPayLoad.code;
+package umc.spring.apiPayLoad.code.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import umc.spring.apiPayLoad.code.BaseErrorCode;
+import umc.spring.apiPayLoad.code.ErrorReasonDTO;
 
 @Getter
 @AllArgsConstructor

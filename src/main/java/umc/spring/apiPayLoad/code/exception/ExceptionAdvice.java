@@ -1,4 +1,4 @@
-package umc.spring.apiPayLoad.code;
+package umc.spring.apiPayLoad.code.exception;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
@@ -15,6 +15,7 @@ import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import umc.spring.apiPayLoad.ApiResponse;
+import umc.spring.apiPayLoad.code.ErrorReasonDTO;
 import umc.spring.apiPayLoad.code.status.ErrorStatus;
 
 import java.util.LinkedHashMap;
