@@ -24,6 +24,8 @@ public class QReview extends EntityPathBase<Review> {
 
     public final umc.spring.domain.common.QBaseEntity _super = new umc.spring.domain.common.QBaseEntity(this);
 
+    public final StringPath body = createString("body");
+
     public final StringPath content = createString("content");
 
     //inherited

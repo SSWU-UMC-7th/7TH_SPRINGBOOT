@@ -1,10 +1,13 @@
 package umc.spring.service.StoreService;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import umc.spring.domain.Review;
 import umc.spring.domain.Store;
 import umc.spring.domain.Mission;
+import umc.spring.repository.ReviewRepository.ReviewRepository;
 import umc.spring.repository.StoreRepository.StoreRepository;
 import umc.spring.repository.StoreRepository.StoreRepositoryCustom;
 
@@ -19,7 +22,8 @@ import org.springframework.data.domain.Pageable;
 public class StoreQueryServiceImpl implements StoreQueryService {
 
     private final StoreRepository storeRepository;
-    private final StoreRepositoryCustom storeRepositoryCustom; // 별도의 인터페이스로 주입
+    private final StoreRepositoryCustom storeRepositoryCustom;
+    private final ReviewRepository reviewRepository;
 
     @Override
     public Optional<Store> findStore(Long id) {
@@ -36,5 +40,13 @@ public class StoreQueryServiceImpl implements StoreQueryService {
     @Override
     public Page<Mission> findMissionsByStatus(String status, Pageable pageable) {
         return storeRepositoryCustom.findMissionsByStatus(status, pageable);
+    }
+    @Override
+    public Page<Review> getReviewList(Long StoreId, Integer page) {
+
+        Store store = storeRepository.findById(StoreId).get();
+
+        Page<Review> StorePage = reviewRepository.findAllByStore(store, PageRequest.of(page, 10));
+        return StorePage;
     }
 }
