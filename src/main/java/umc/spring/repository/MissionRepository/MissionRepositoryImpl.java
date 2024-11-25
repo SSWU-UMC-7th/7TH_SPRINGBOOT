@@ -13,7 +13,6 @@ import umc.spring.domain.QMission;
 import java.util.List;
 
 @Repository
-@RequiredArgsConstructor
 public class MissionRepositoryImpl implements MissionRepositoryCustom {
 
     private final JPAQueryFactory queryFactory;
@@ -40,6 +39,31 @@ public class MissionRepositoryImpl implements MissionRepositoryCustom {
                 .selectFrom(mission)
                 .where(builder)
                 .fetchCount();
+
+        return new PageImpl<>(missions, pageable, total);
+    }
+
+    public MissionRepositoryImpl(JPAQueryFactory queryFactory) {
+        this.queryFactory = queryFactory;
+    }
+
+    @Override
+    public Page<Mission> findOngoingMissions(Pageable pageable) {
+        QMission mission = QMission.mission;
+
+        List<Mission> missions = queryFactory
+                .selectFrom(mission)
+                .where(mission.status.eq("ONGOING"))
+                .orderBy(mission.deadline.asc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        long total = queryFactory
+                .select(mission.count())
+                .from(mission)
+                .where(mission.status.eq("ONGOING"))
+                .fetchOne();
 
         return new PageImpl<>(missions, pageable, total);
     }

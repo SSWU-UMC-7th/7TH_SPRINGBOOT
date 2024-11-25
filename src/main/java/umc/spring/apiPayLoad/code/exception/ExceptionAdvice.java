@@ -106,4 +106,19 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler {
         ApiResponse<Object> body = ApiResponse.onFailure(String.valueOf(errorCommonStatus.value()), errorCommonStatus.getReasonPhrase(), null);
         return super.handleExceptionInternal(e, body, headers, errorCommonStatus, request);
     }
+
+    @ExceptionHandler(MissionNotFoundException.class)
+    public ResponseEntity<String> handleMissionNotFoundException(MissionNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(MissionAlreadyCompletedException.class)
+    public ResponseEntity<String> handleMissionAlreadyCompletedException(MissionAlreadyCompletedException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(InvalidMissionStatusException.class)
+    public ResponseEntity<String> handleInvalidMissionStatusException(InvalidMissionStatusException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
 }

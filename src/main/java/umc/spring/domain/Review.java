@@ -2,6 +2,7 @@ package umc.spring.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.apache.catalina.User;
 import umc.spring.domain.common.BaseEntity;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class Review extends BaseEntity {
     @Column(name = "title")
     private String content; // 리뷰 내용
 
+    private Long userId;
     private Float score;
 
     @Column(columnDefinition = "TEXT")

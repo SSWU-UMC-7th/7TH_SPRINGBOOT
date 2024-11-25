@@ -12,4 +12,5 @@ import java.util.List;
 public interface ReviewRepository extends JpaRepository<Review, Long>, ReviewRepositoryCustom {
     Page<Review> findByStoreId(Long storeId, Pageable pageable);
     Page<Review> findAllByStore(Store store, PageRequest pageRequest);
+    Page<Review> findAllByUserId(Long userId, Pageable pageable);
 }

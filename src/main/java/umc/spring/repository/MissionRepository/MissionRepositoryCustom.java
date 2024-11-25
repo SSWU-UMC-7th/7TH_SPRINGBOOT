@@ -7,4 +7,5 @@ import umc.spring.domain.Mission;
 
 public interface MissionRepositoryCustom {
     Page<Mission> findMissionsByRegion(Long regionId, Pageable pageable);
+    Page<Mission> findOngoingMissions(Pageable pageable);
 }

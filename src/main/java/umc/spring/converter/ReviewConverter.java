@@ -19,10 +19,11 @@ public class ReviewConverter {
 
         return Review.builder()
                 .store(store)  // Store 객체 설정
-                .content(dto.getContent())
+                .body(dto.getContent()) // Review의 body 필드에 매핑
                 .score(dto.getScore())
-                .id(dto.getUserId())
+                .userId(dto.getUserId())
                 .build();
+
     }
 }
 
