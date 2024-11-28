@@ -1,6 +1,7 @@
 package umc.spring.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import umc.spring.apiPayLoad.code.exception.handler.ErrorStatus;
@@ -19,26 +20,43 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class MemberCommandServiceImpl implements MemberCommandService{
+public class MemberCommandServiceImpl implements MemberCommandService {
 
     private final MemberRepository memberRepository;
-
     private final FoodCategoryRepository foodCategoryRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional
     public Member joinMember(MemberRequestDTO.JoinDto request) {
+        System.out.println("회원 요청 데이터: " + request);
 
         Member newMember = MemberConverter.toMember(request);
+        System.out.println("변환된 Member 객체: " + newMember);
+
         List<FoodCategory> foodCategoryList = request.getPreferCategory().stream()
-                .map(category -> {
-                    return foodCategoryRepository.findById(category).orElseThrow(() -> new FoodCategoryHandler(ErrorStatus.FOOD_CATEGORY_NOT_FOUND));
+                .map(categoryId -> foodCategoryRepository.findById(categoryId)
+                        .orElseThrow(() -> new FoodCategoryHandler(ErrorStatus.FOOD_CATEGORY_NOT_FOUND)))
+                .collect(Collectors.toList());
+        System.out.println("연결된 FoodCategory: " + foodCategoryList);
+
+        List<MemberPrefer> memberPreferList = foodCategoryList.stream()
+                .map(foodCategory -> {
+                    MemberPrefer memberPrefer = MemberPrefer.builder()
+                            .member(newMember)
+                            .foodCategory(foodCategory)
+                            .build();
+                    memberPrefer.setMember(newMember);
+                    memberPrefer.setFoodCategory(foodCategory);
+                    return memberPrefer;
                 }).collect(Collectors.toList());
+        System.out.println("생성된 MemberPrefer: " + memberPreferList);
 
-        List<MemberPrefer> memberPreferList = MemberPreferConverter.toMemberPreferList(foodCategoryList);
+        newMember.setMemberPreferList(memberPreferList);
 
-        memberPreferList.forEach(memberPrefer -> {memberPrefer.setMember(newMember);});
+        Member savedMember = memberRepository.save(newMember);
+        System.out.println("저장된 Member: " + savedMember);
 
-        return memberRepository.save(newMember);
+        return savedMember;
     }
 }

@@ -12,27 +12,25 @@ import java.lang.annotation.Annotation;
 import java.util.List;
 
 @Component
-@RequiredArgsConstructor
 public class CategoriesExistValidator implements ConstraintValidator<ExistCategories, List<Long>> {
 
     private final FoodCategoryRepository foodCategoryRepository;
 
-    @Override
-    public void initialize(ExistCategories constraintAnnotation) {
-        ConstraintValidator.super.initialize(constraintAnnotation);
+    public CategoriesExistValidator(FoodCategoryRepository foodCategoryRepository) {
+        this.foodCategoryRepository = foodCategoryRepository;
     }
 
     @Override
     public boolean isValid(List<Long> values, ConstraintValidatorContext context) {
-        boolean isValid = values.stream()
-                .allMatch(value -> foodCategoryRepository.existsById(value));
+        System.out.println("검증 대상 값: " + values);
 
-        if (!isValid) {
-            context.disableDefaultConstraintViolation();
-            context.buildConstraintViolationWithTemplate(ErrorStatus.FOOD_CATEGORY_NOT_FOUND.toString()).addConstraintViolation();
+        // null 또는 빈 리스트는 유효한 값으로 처리
+        if (values == null || values.isEmpty()) {
+            return true; // 빈 리스트를 허용하지 않으려면 false로 변경
         }
 
-        return isValid;
-
+        // ID가 모두 유효한지 확인
+        return values.stream()
+                .allMatch(id -> foodCategoryRepository.existsById(id));
     }
 }
